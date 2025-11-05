@@ -1,0 +1,35 @@
+// browser_service.mojom
+// Mojo Interface Definition Language example
+
+module browser.mojom;
+
+// Tab state enumeration
+enum TabState {
+  LOADING,
+  LOADED,
+  CRASHED
+};
+
+// Browser service interface
+interface BrowserService {
+  // Create a new tab with the given URL
+  CreateTab(string url) => (int32 tab_id, TabState state);
+  
+  // Close an existing tab
+  CloseTab(int32 tab_id) => (bool success);
+  
+  // Navigate a tab to a new URL
+  NavigateTab(int32 tab_id, string url) => (TabState state);
+  
+  // Get information about a tab
+  GetTabInfo(int32 tab_id) => (string title, string url, TabState state);
+};
+
+// Renderer service interface
+interface RendererService {
+  // Execute JavaScript in the renderer
+  ExecuteScript(string script) => (string result);
+  
+  // Take a screenshot
+  CaptureScreenshot() => (array<uint8> png_data);
+};
